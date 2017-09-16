@@ -222,16 +222,15 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public void bubbleSort() {
-//		int n = this.students.length;
-//		for (int i = 0; i < n - 1; i++)
-//			for (int j = 0; j < n - i - 1; j++)
-//				if (this.students[j].getId() > this.students[j + 1].getId()) {
-//					Student temp = this.students[j];
-//					this.students[j] = this.students[j + 1];
-//					this.students[j + 1] = temp;
-//				}
-		//Question in not clear...Parameter should be  specified ex:age,id,or any  other
-		Arrays.sort(this.students);
+		int n = this.students.length;
+		for (int i = 0; i < n - 1; i++)
+			for (int j = 0; j < n - i - 1; j++)
+				if (this.students[j].compareTo(this.students[j + 1]) >0) {
+					Student temp = this.students[j];
+					this.students[j] = this.students[j + 1];
+					this.students[j + 1] = temp;
+				}
+
 	}
 
 	@Override
@@ -258,8 +257,19 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
-		// Add your implementation here
-		return null;
+		if(firstDate==null || lastDate==null){
+			throw new IllegalArgumentException();
+		}else{
+			ArrayList<Student> arr=new ArrayList<Student>();
+			for(int i=0;i<this.students.length;i++){
+				if(this.students[i].getBirthDate().equals(firstDate) || this.students[i].getBirthDate().equals(lastDate) ){
+					arr.add(this.students[i]);
+				}else if(this.students[i].compareTo(firstDate)>0 && this.students[i].compareTo(lastDate)<0){
+					arr.add(this.students[i]);
+				}
+			}
+			return  (Student[]) arr.toArray();
+		}
 	}
 
 	@Override
@@ -276,8 +286,11 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public Student[] getStudentsByAge(int age) {
-		// Add your implementation here
-		return null;
+		ArrayList<Student> arr=new ArrayList<Student>();
+		for(int i=0;i<this.students.length;i++){
+			arr.add(this.students[i]);
+		}
+		return (Student[]) arr.toArray();
 	}
 
 	@Override
