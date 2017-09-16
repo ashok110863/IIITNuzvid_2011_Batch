@@ -1,3 +1,5 @@
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -179,23 +181,64 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public void removeToIndex(int index) {
-		// Add your implementation here
+		if(index<0 || index>=this.students.length){
+			throw new IllegalArgumentException();
+		}else{
+			Student[] arr=new Student[this.students.length-index+1];
+			for(int i=index;i<=this.students.length;i++){
+				arr[i]=this.students[i];
+			}
+			this.students=arr;
+		}
 	}
 
 	@Override
 	public void removeToElement(Student student) {
-		// Add your implementation here
+		if(student==null){
+			throw new IllegalArgumentException();
+		}else{
+			int index=-1;
+			for(int i=0;i<this.students.length;i++){
+				if(student.equals(this.students[i])){
+					index=i;
+					break;
+				}
+			}
+			Student[] arr=new Student[this.students.length-index+1];
+			for(int i=index;i<=this.students.length;i++){
+				arr[i]=this.students[i];
+			}
+			this.students=arr;
+		}
 	}
 
 	@Override
 	public void bubbleSort() {
-		// Add your implementation here
+		 int n = this.students.length;
+	        for (int i = 0; i < n-1; i++)
+	            for (int j = 0; j < n-i-1; j++)
+	                if (this.students[j].getId() > this.students[j+1].getId())
+	                {
+	                    Student temp = this.students[j];
+	                    this.students[j] = this.students[j+1];
+	                    this.students[j+1] = temp;
+	                }
 	}
 
 	@Override
 	public Student[] getByBirthDate(Date date) {
-		// Add your implementation here
-		return null;
+		ArrayList<Student> studs=new ArrayList<Student>();
+		if(date==null){
+			throw  new IllegalArgumentException();
+		}else{
+		for(int i=0;i<this.students.length;i++){
+			if(date.equals(this.students[i])){
+				studs.add(this.students[i]);
+			}
+		}
+		return (Student[]) studs.toArray();
+		}
+		
 	}
 
 	@Override
