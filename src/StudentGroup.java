@@ -86,6 +86,7 @@ public class StudentGroup implements StudentArrayOperation {
 			for (int i = 0; i < this.students.length; i++) {
 				newArray[i] = this.students[i];
 			}
+			newArray[this.students.length]=student;
 			this.students = newArray;
 		}
 	}
@@ -100,7 +101,7 @@ public class StudentGroup implements StudentArrayOperation {
 				newArray[i] = this.students[i];
 			}
 			newArray[index] = student;
-			for (int i = index; i < this.students.length; i++) {
+			for (int i = index+1; i < this.students.length; i++) {
 				newArray[i] = this.students[i];
 			}
 			this.students = newArray;
