@@ -1,8 +1,10 @@
 import java.awt.List;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -284,45 +286,60 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
-		// Add your implementation here
-		return 0;
+		if(indexOfStudent==0){
+			throw new IllegalArgumentException();
+		}else{
+			Student student=this.students[indexOfStudent];
+			return returnAge(student.getBirthDate());
+		}
 	}
 
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		ArrayList<Student> arr=new ArrayList<Student>();
-		LocalDate today = LocalDate.now();
-		 
 		for(int i=0;i<this.students.length;i++){
-			LocalDate birthday = LocalDate.of(this.students[i].getBirthDate().getYear(),this.students[i].getBirthDate().getMonth(),this.students[i].getBirthDate().getDay());
-			Period p = Period.between(birthday, today);
-
-			if(age==p.getYears())
-				arr.add(this.students[i]);
+			if(age==returnAge(this.students[i].getBirthDate())){
+			arr.add(this.students[i]);
+			}
 		}
 		Student[] newArr = new Student[arr.size()];
 		newArr = arr.toArray(newArr);
 		return newArr;
 	}
 
+	public int returnAge(Date bday){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(bday);
+		LocalDate birthday = LocalDate.of(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DATE));
+		LocalDate now = LocalDate.of(2016, Month.SEPTEMBER, 16);
+
+		// using period
+		Period period = Period.between(birthday, now);
+		return period.getYears();
+	}
+	
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
-		double MaxAvg = 0;
+		double d = 0;
 		for (int i = 0; i < students.length; i++) {
 
-			if (students[i].getAvgMark() > MaxAvg) {
-				MaxAvg = students[i].getAvgMark();
+			if (students[i].getAvgMark() > d) {
+				d = students[i].getAvgMark();
 			}
 		}
-		ArrayList<Student> arr=new ArrayList<Student>();
-		for(int i=0;i<this.students.length;i++){
-			if(this.students[i].getAvgMark()==MaxAvg)
-				arr.add(this.students[i]);
+		Student[] st = new Student[students.length];
+		int count = 0;
+		for (int i = 0; i < students.length; i++) {
+			if (d == students[i].getAvgMark()) {
+				st[count] = students[i];
+				count++;
+			}
 		}
-		Student[] newArr = new Student[arr.size()];
-		newArr = arr.toArray(newArr);
-		return newArr;
-		
+		Student[] ts = new Student[count];
+		for (int i = 0; i < count; i++) {
+			ts[i] = st[i];
+		}
+		return ts;
 	}
 
 	@Override
