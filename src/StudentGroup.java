@@ -1,4 +1,6 @@
 import java.awt.List;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -289,8 +291,14 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		ArrayList<Student> arr=new ArrayList<Student>();
+		LocalDate today = LocalDate.now();
+		 
 		for(int i=0;i<this.students.length;i++){
-			arr.add(this.students[i]);
+			LocalDate birthday = LocalDate.of(this.students[i].getBirthDate().getYear(),this.students[i].getBirthDate().getMonth(),this.students[i].getBirthDate().getDay());
+			Period p = Period.between(birthday, today);
+
+			if(age==p.getYears())
+				arr.add(this.students[i]);
 		}
 		Student[] newArr = new Student[arr.size()];
 		newArr = arr.toArray(newArr);
@@ -299,26 +307,22 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
-		double d = 0;
+		double MaxAvg = 0;
 		for (int i = 0; i < students.length; i++) {
 
-			if (students[i].getAvgMark() > d) {
-				d = students[i].getAvgMark();
+			if (students[i].getAvgMark() > MaxAvg) {
+				MaxAvg = students[i].getAvgMark();
 			}
 		}
-		Student[] st = new Student[students.length];
-		int count = 0;
-		for (int i = 0; i < students.length; i++) {
-			if (d == students[i].getAvgMark()) {
-				st[count] = students[i];
-				count++;
-			}
+		ArrayList<Student> arr=new ArrayList<Student>();
+		for(int i=0;i<this.students.length;i++){
+			if(this.students[i].getAvgMark()==MaxAvg)
+				arr.add(this.students[i]);
 		}
-		Student[] ts = new Student[count];
-		for (int i = 0; i < count; i++) {
-			ts[i] = st[i];
-		}
-		return ts;
+		Student[] newArr = new Student[arr.size()];
+		newArr = arr.toArray(newArr);
+		return newArr;
+		
 	}
 
 	@Override
