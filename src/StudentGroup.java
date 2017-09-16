@@ -185,8 +185,10 @@ public class StudentGroup implements StudentArrayOperation {
 			throw new IllegalArgumentException();
 		}else{
 			Student[] arr=new Student[this.students.length-index+1];
-			for(int i=0;i<=index;i++){
-				arr[i]=this.students[i];
+			int  idx=0;
+			for(int i=index;i<=this.students.length;i++){
+				arr[idx]=this.students[i];
+				idx++;
 			}
 			this.students=arr;
 		}
@@ -204,9 +206,11 @@ public class StudentGroup implements StudentArrayOperation {
 					break;
 				}
 			}
+			int idx=0;
 			Student[] arr=new Student[this.students.length-index+1];
-			for(int i=0;i<=index;i++){
-				arr[i]=this.students[i];
+			for(int i=index;i<=this.students.length;i++){
+				arr[idx]=this.students[i];
+				idx++;
 			}
 			this.students=arr;
 		}
