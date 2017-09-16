@@ -264,11 +264,13 @@ public class StudentGroup implements StudentArrayOperation {
 			for(int i=0;i<this.students.length;i++){
 				if(this.students[i].getBirthDate().equals(firstDate) || this.students[i].getBirthDate().equals(lastDate) ){
 					arr.add(this.students[i]);
-				}else if(this.students[i].compareTo(firstDate)>0 && this.students[i].compareTo(lastDate)<0){
+				}else if(this.students[i].getBirthDate().compareTo(firstDate)>0 && this.students[i].getBirthDate().compareTo(lastDate)<0){
 					arr.add(this.students[i]);
 				}
 			}
-			return  (Student[]) arr.toArray();
+			Student[] newArr = new Student[arr.size()];
+			newArr = arr.toArray(newArr);
+			return newArr;
 		}
 	}
 
@@ -290,7 +292,9 @@ public class StudentGroup implements StudentArrayOperation {
 		for(int i=0;i<this.students.length;i++){
 			arr.add(this.students[i]);
 		}
-		return (Student[]) arr.toArray();
+		Student[] newArr = new Student[arr.size()];
+		newArr = arr.toArray(newArr);
+		return newArr;
 	}
 
 	@Override
