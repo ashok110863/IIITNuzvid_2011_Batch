@@ -120,7 +120,28 @@ public class StudentGroup implements StudentArrayOperation {
 
 	@Override
 	public void remove(Student student) {
-		// Add your implementation here
+		if(student==null){
+			throw new IllegalArgumentException();
+		}
+		int  index=-1;
+		for(int i=0;i<this.students.length;i++){
+			if(student.equals(this.students[i])){
+				index=i;
+				break;
+			}
+		}
+		if(index==-1){
+			throw new IllegalArgumentException("Student not exist");
+		}else{
+			Student[]  arr=new  Student[this.students.length-1];
+			for(int i=0;i<index;i++){
+				arr[i]=this.students[i];
+			}
+			for(int i=index+1;i<this.students.length;i++){
+				arr[i-1]=this.students[i];
+			}
+			this.students=arr;
+		}
 	}
 
 	@Override
